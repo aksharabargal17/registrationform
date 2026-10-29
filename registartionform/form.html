@@ -1,0 +1,773 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration | College Portal</title>
+
+    
+<style>
+    :root {
+        --primary: #17365d;
+        --primary-dark: #102743;
+        --accent: #0f766e;
+        --accent-light: #e6f5f2;
+        --background: #f3f6fa;
+        --surface: #ffffff;
+        --text: #26364b;
+        --muted: #718096;
+        --border: #dce4ee;
+        --danger: #c0392b;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    body {
+        background: var(--background);
+        color: var(--text);
+        font-size: 14px;
+    }
+
+    .navbar {
+        background: linear-gradient(110deg, var(--primary-dark), var(--primary));
+        color: white;
+        padding: 16px 7%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        box-shadow: 0 3px 12px rgba(16, 39, 67, 0.16);
+    }
+
+    .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .college-logo {
+        width: 43px;
+        height: 43px;
+        background: white;
+        color: var(--primary);
+        border-radius: 9px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 17px;
+        font-weight: 800;
+    }
+
+    .brand h2 {
+        font-size: 18px;
+        letter-spacing: 0.2px;
+    }
+
+    .brand p {
+        color: #d0ddeb;
+        font-size: 12px;
+        margin-top: 4px;
+    }
+
+    .nav-label {
+        font-size: 12px;
+        color: #e1eaf4;
+        background: rgba(255, 255, 255, 0.09);
+        padding: 9px 13px;
+        border-radius: 6px;
+    }
+
+    .page {
+        max-width: 1020px;
+        margin: 30px auto;
+        padding: 0 20px;
+    }
+
+    .breadcrumb {
+        color: var(--muted);
+        font-size: 12px;
+        margin-bottom: 19px;
+    }
+
+    .breadcrumb span {
+        color: var(--accent);
+        font-weight: 600;
+    }
+
+    .page-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 15px;
+        margin-bottom: 22px;
+    }
+
+    .page-heading h1 {
+        color: var(--primary);
+        font-size: 28px;
+        margin-bottom: 7px;
+        letter-spacing: -0.5px;
+    }
+
+    .page-heading p {
+        color: var(--muted);
+        line-height: 1.6;
+    }
+
+    .academic-year {
+        background: var(--accent-light);
+        color: #11665f;
+        border: 1px solid #c8e8e2;
+        padding: 10px 13px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .form-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        box-shadow: 0 8px 28px rgba(28, 48, 74, 0.06);
+        overflow: hidden;
+    }
+
+    .form-top {
+        padding: 18px 26px;
+        background: #fbfcfe;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .form-top h2 {
+        color: var(--primary);
+        font-size: 16px;
+    }
+
+    .required-note {
+        font-size: 12px;
+        color: var(--muted);
+    }
+
+    .required {
+        color: var(--danger);
+    }
+
+    form {
+        padding: 25px 26px 27px;
+    }
+
+    .section {
+        margin-bottom: 28px;
+    }
+
+    .section-heading {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        padding-bottom: 13px;
+        margin-bottom: 19px;
+        border-bottom: 1px solid #e9eef4;
+    }
+
+    .section-number {
+        width: 31px;
+        height: 31px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--accent-light);
+        color: var(--accent);
+        border: 1px solid #cde9e3;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .section-heading h3 {
+        font-size: 14px;
+        color: var(--primary);
+    }
+
+    .section-heading p {
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 4px;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px 20px;
+    }
+
+    .field {
+        min-width: 0;
+    }
+
+    .field.wide {
+        grid-column: span 2;
+    }
+
+    .field.full {
+        grid-column: 1 / -1;
+    }
+
+    .field label,
+    .field-label {
+        display: block;
+        color: #34465d;
+        font-weight: 600;
+        font-size: 12px;
+        margin-bottom: 7px;
+    }
+
+    input,
+    select,
+    textarea {
+        width: 100%;
+        border: 1px solid #cfd9e5;
+        border-radius: 6px;
+        background: #fff;
+        color: var(--text);
+        padding: 10px 11px;
+        font-size: 13px;
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+        color: #9aa7b7;
+    }
+
+    input:hover,
+    select:hover,
+    textarea:hover {
+        border-color: #9aafc4;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+    }
+
+    textarea {
+        min-height: 68px;
+        resize: vertical;
+    }
+
+    .radio-options {
+        min-height: 38px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .radio-options label {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 13px;
+        font-weight: 400;
+        color: #4b5b70;
+        margin: 0;
+        cursor: pointer;
+    }
+
+    .radio-options input {
+        width: 15px;
+        height: 15px;
+        margin: 0;
+        accent-color: var(--accent);
+    }
+
+    .form-actions {
+        border-top: 1px solid #e6ebf2;
+        padding-top: 22px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .privacy-note {
+        max-width: 430px;
+        font-size: 11px;
+        color: var(--muted);
+        line-height: 1.7;
+    }
+
+    .buttons {
+        display: flex;
+        gap: 10px;
+        flex-shrink: 0;
+    }
+
+    button {
+        padding: 11px 18px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s, border-color 0.2s,
+                    transform 0.2s, box-shadow 0.2s;
+    }
+
+    button:active {
+        transform: translateY(1px);
+    }
+
+    .clear-btn {
+        background: white;
+        color: #475569;
+        border: 1px solid #cfd9e5;
+    }
+
+    .clear-btn:hover {
+        background: #f1f5f9;
+        border-color: #aab9ca;
+    }
+
+    .submit-btn {
+        background: var(--accent);
+        color: white;
+        border: 1px solid var(--accent);
+        box-shadow: 0 2px 5px rgba(15, 118, 110, 0.16);
+    }
+
+    .submit-btn:hover {
+        background: #0b625b;
+        border-color: #0b625b;
+        box-shadow: 0 4px 10px rgba(15, 118, 110, 0.2);
+    }
+
+    .success-message {
+        display: none;
+        padding: 16px 18px;
+        margin: 0 26px 24px;
+        border: 1px solid #a8dfbf;
+        background: #effaf3;
+        color: #17653a;
+        border-radius: 7px;
+        line-height: 1.6;
+    }
+
+    .success-message h3 {
+        font-size: 15px;
+        margin-bottom: 4px;
+    }
+
+    .success-message p {
+        font-size: 13px;
+    }
+
+    .success-message.show {
+        display: block;
+    }
+
+    .error-message {
+        display: none;
+        color: var(--danger);
+        font-size: 12px;
+        margin-top: 7px;
+    }
+
+    .error-message.show {
+        display: block;
+    }
+
+    footer {
+        margin-top: 25px;
+        padding: 19px 0;
+        border-top: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        color: var(--muted);
+        font-size: 11px;
+    }
+
+    footer a {
+        color: #356b83;
+        text-decoration: none;
+        margin-left: 15px;
+        transition: color 0.2s;
+    }
+
+    footer a:hover {
+        color: var(--accent);
+        text-decoration: underline;
+    }
+
+    @media (max-width: 760px) {
+        .navbar {
+            padding: 15px 5%;
+        }
+
+        .page {
+            margin-top: 24px;
+        }
+
+        .grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .form-actions {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .buttons {
+            width: 100%;
+        }
+
+        .buttons button {
+            flex: 1;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .nav-label,
+        .academic-year {
+            display: none;
+        }
+
+        .page {
+            padding: 0 12px;
+        }
+
+        .page-heading {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .page-heading h1 {
+            font-size: 23px;
+        }
+
+        .grid {
+            grid-template-columns: 1fr;
+        }
+
+        .field.wide,
+        .field.full {
+            grid-column: auto;
+        }
+
+        form {
+            padding: 20px 16px;
+        }
+
+        .form-top {
+            padding: 15px 16px;
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .success-message {
+            margin: 0 16px 20px;
+        }
+
+        footer {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        footer a:first-child {
+            margin-left: 0;
+        }
+    }
+</style>
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="brand">
+            
+            <div>
+                <h2>Student Portal</h2>
+                <p>Student Information &amp; Registration Portal</p>
+            </div>
+        </div>
+        <div class="nav-label">Admissions / Registration</div>
+    </nav>
+
+    <main class="page">
+
+        <div class="breadcrumb">
+            Home &nbsp; / &nbsp; Admissions &nbsp; / &nbsp;
+            <span>Student Registration</span>
+        </div>
+
+        <div class="page-heading">
+            <div>
+                <h1>Student Registration</h1>
+                <p>Enter your personal and academic details to register.</p>
+            </div>
+            <div class="academic-year">Academic Session: 2026–27</div>
+        </div>
+
+        <div class="form-card">
+
+            <div class="form-top">
+                <h2>Registration Details</h2>
+                <p class="required-note">
+                    Fields marked <span class="required">*</span> are mandatory
+                </p>
+            </div>
+
+            <form id="registrationForm">
+
+                <section class="section">
+                    <div class="section-heading">
+                        <div class="section-number">01</div>
+                        <div>
+                            <h3>Personal Information</h3>
+                            <p>Provide your basic personal details</p>
+                        </div>
+                    </div>
+
+                    <div class="grid">
+
+                        <div class="field wide">
+                            <label for="name">Full Name <span class="required">*</span></label>
+                            <input type="text" id="name" name="full_name"
+                                   placeholder="Enter full name as per records"
+                                   autocomplete="name" required>
+                        </div>
+
+                        <div class="field">
+                            <label for="dob">Date of Birth <span class="required">*</span></label>
+                            <input type="date" id="dob" name="dob" required>
+                        </div>
+
+                        <div class="field">
+                            <label for="email">Email Address <span class="required">*</span></label>
+                            <input type="email" id="email" name="email"
+                                   placeholder="student@example.com"
+                                   autocomplete="email" required>
+                        </div>
+
+                        <div class="field">
+                            <label for="phone">Mobile Number <span class="required">*</span></label>
+                            <input type="tel" id="phone" name="phone"
+                                   placeholder="10-digit mobile number"
+                                   pattern="[6-9][0-9]{9}"
+                                   title="Enter a valid 10-digit Indian mobile number"
+                                   autocomplete="tel" required>
+                        </div>
+
+                        <div class="field">
+                            <span class="field-label">Gender</span>
+                            <div class="radio-options">
+                                <label><input type="radio" name="gender" value="Male"> Male</label>
+                                <label><input type="radio" name="gender" value="Female"> Female</label>
+                                <label><input type="radio" name="gender" value="Other"> Other</label>
+                            </div>
+                        </div>
+
+                        <div class="field full">
+                            <label for="address">Residential Address</label>
+                            <textarea id="address" name="address"
+                                      placeholder="House number, street, area"></textarea>
+                        </div>
+
+                        <div class="field">
+                            <label for="city">City</label>
+                            <input type="text" id="city" name="city" placeholder="Enter city">
+                        </div>
+
+                        <div class="field">
+                            <label for="state">State</label>
+                            <select id="state" name="state">
+                                <option value="">Select state</option>
+                                <option>Maharashtra</option>
+                                <option>Gujarat</option>
+                                <option>Madhya Pradesh</option>
+                                <option>Goa</option>
+                                <option>Rajasthan</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="pincode">PIN Code</label>
+                            <input type="text" id="pincode" name="pincode"
+                                   inputmode="numeric" pattern="[0-9]{6}"
+                                   title="Enter a 6-digit PIN code"
+                                   placeholder="6-digit PIN code">
+                        </div>
+
+                    </div>
+                </section>
+
+                <section class="section">
+                    <div class="section-heading">
+                        <div class="section-number">02</div>
+                        <div>
+                            <h3>Academic Information</h3>
+                            <p>Select your programme and current academic year</p>
+                        </div>
+                    </div>
+
+                    <div class="grid">
+
+                        <div class="field wide">
+                            <label for="course">Programme / Course <span class="required">*</span></label>
+                            <select id="course" name="course" required>
+                                <option value="">Select programme</option>
+                                <option value="AI-DS">B.E. Artificial Intelligence &amp; Data Science</option>
+                                <option value="Computer">B.E. Computer Engineering</option>
+                                <option value="IT">B.E. Information Technology</option>
+                                <option value="Mechanical">B.E. Mechanical Engineering</option>
+                                <option value="Civil">B.E. Civil Engineering</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="year">Current Year <span class="required">*</span></label>
+                            <select id="year" name="year" required>
+                                <option value="">Select year</option>
+                                <option value="1">First Year</option>
+                                <option value="2">Second Year</option>
+                                <option value="3">Third Year</option>
+                                <option value="4">Fourth Year</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="semester">Current Semester</label>
+                            <select id="semester" name="semester">
+                                <option value="">Select semester</option>
+                                <option value="1">Semester 1</option>
+                                <option value="2">Semester 2</option>
+                                <option value="3">Semester 3</option>
+                                <option value="4">Semester 4</option>
+                                <option value="5">Semester 5</option>
+                                <option value="6">Semester 6</option>
+                                <option value="7">Semester 7</option>
+                                <option value="8">Semester 8</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="admission">Admission Type</label>
+                            <select id="admission" name="admission_type">
+                                <option value="">Select type</option>
+                                <option value="Regular">Regular</option>
+                                <option value="Lateral">Direct Second Year / Lateral Entry</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </section>
+
+                <section class="section">
+                    <div class="section-heading">
+                        <div class="section-number">03</div>
+                        <div>
+                            <h3>Account Information</h3>
+                            <p>Create login credentials for your student account</p>
+                        </div>
+                    </div>
+
+                    <div class="grid">
+
+                        <div class="field">
+                            <label for="username">Username <span class="required">*</span></label>
+                            <input type="text" id="username" name="username"
+                                   placeholder="Choose a username"
+                                   autocomplete="username" required>
+                        </div>
+
+                        <div class="field">
+                            <label for="password">Password <span class="required">*</span></label>
+                            <input type="password" id="password" name="password"
+                                   placeholder="At least 8 characters"
+                                   minlength="8" autocomplete="new-password" required>
+                        </div>
+
+                        <div class="field">
+                            <label for="confirm">Confirm Password <span class="required">*</span></label>
+                            <input type="password" id="confirm" name="confirm_password"
+                                   placeholder="Re-enter password"
+                                   minlength="8" autocomplete="new-password" required>
+                        </div>
+
+                    </div>
+                    <p id="passwordError" class="error-message" role="alert">
+                        Passwords do not match. Please check both fields.
+                    </p>
+                </section>
+
+                <div class="form-actions">
+                    <p class="privacy-note">
+                        Please verify your details before submitting.
+                        This demonstration does not store your information.
+                    </p>
+
+                    <div class="buttons">
+                        <button type="reset" class="clear-btn">Clear Form</button>
+                        <button type="submit" class="submit-btn">Submit Registration &rarr;</button>
+                    </div>
+                </div>
+
+            </form>
+
+            <div id="successMessage" class="success-message"
+                 role="status" aria-live="polite">
+                <h3>✓ Registration submitted successfully!</h3>
+                <p>Your form passed the browser's validation. This is a demonstration only;
+                   your information has not been saved to a college database.</p>
+            </div>
+
+        </div>
+
+        <footer>
+            <p>© 2026 CampusConnect. Student Services Platform.</p>
+            <div>
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#help">Help &amp; Support</a>
+            </div>
+        </footer>
+
+    </main>
+
+   
+<script>
+    const form = document.getElementById("registrationForm");
+
+    form.onsubmit = function(event) {
+        event.preventDefault();
+
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirm").value;
+
+        if (password !== confirmPassword) {
+            alert("Passwords do not match!");
+            return;
+        }
+
+        document.getElementById("successMessage").style.display = "block";
+    };
+</script>
+</body>
+</html>
